@@ -6,6 +6,9 @@ This is a fork of ozkl's DoomGeneric which adds port to the BootExecute environm
 2. InbvShim (https://github.com/Cacodemon345/inbvbootdrv).
 3. Windows 7 DDK (for building InbvShim and ntdll.lib).
 
+# Requirements for running
+Only tested on Windows XP 32-bit. I don't know about later versions.
+
 # Building
 Note: Only 32-bit Debug builds are supported, anything else is broken.
 Copy over the ntdll.lib file from \path\to\WinDDK\7600.16385.1\lib\wxp\i386\ to the doomgeneric directory inside the project. Open the solution, right click "doomgeneric_nt" and select "Build".
