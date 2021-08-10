@@ -36,7 +36,6 @@
 
 #endif
 
-
 //
 // The packed attribute forces structures to be packed into the minimum 
 // space necessary.  If this is not done, the compiler may align structure
@@ -61,6 +60,71 @@
 // standard and defined to include stdint.h, so include this. 
 
 #include <inttypes.h>
+#include <string.h>
+
+#ifdef _WINNT_NATIVE_MODE
+// Make file functions aliases of their nt_* equivalents.
+#define printf nt_printf
+#define fprintf nt_fprintf
+#define fopen nt_fopena
+#define fclose nt_fclose
+#define fread nt_fread
+#define fwrite nt_fwrite
+#define ftell nt_ftell
+#define fseek nt_fseek
+#define fclose nt_fclose
+#define fflush nt_fflush
+#define getenv nt_getenv
+#define malloc nt_malloc
+#define calloc nt_calloc
+#define realloc nt_realloc
+#define free nt_free
+#define putchar nt_putchar
+#define puts nt_puts
+#define strdup nt_strdup
+#define mkdir nt_mkdir
+#define remove nt_remove
+#define rename nt_rename
+#define FILE NT_FILE
+struct NT_FILE;
+typedef struct NT_FILE NT_FILE;
+#ifdef stderr
+#undef stderr
+#endif
+#define stderr ((NT_FILE*)-1)
+#ifdef stdout
+#undef stdout
+#endif
+#define stdout ((NT_FILE*)-2)
+extern int __cdecl nt_printf(const char* fmt, ...);
+extern int __cdecl nt_fprintf(const NT_FILE* file, const char* fmt, ...);
+extern NT_FILE* nt_fopen(const wchar_t* filename, const char* mode);
+extern NT_FILE* nt_fopena(const char* filename, const char* mode);
+extern size_t nt_fread(void* buffer, size_t size, size_t count, NT_FILE* f);
+extern size_t nt_fwrite(const void* buffer, size_t size, size_t count, NT_FILE* f);
+extern int nt_fflush(NT_FILE* f);
+extern int nt_ftell(NT_FILE* file);
+extern int nt_fseek(NT_FILE* stream, long offset, int origin);
+extern void nt_fclose(NT_FILE* f);
+extern void* nt_malloc(size_t size);
+extern void* nt_calloc(size_t size1, size_t size2);
+extern void nt_free(void* ptr);
+extern void* nt_realloc(void* ptr, size_t newsize);
+extern char* nt_getenv(const char* name);
+extern void nt_exit(int exit_code);
+extern char* nt_strdup(char* src);
+extern int nt_mkdir(const char* directory);
+extern int nt_remove(const char* directory);
+extern int nt_rename(const char* oldfilename, const char* newfilename);
+extern int nt_puts(const char* string);
+extern int nt_putchar(int);
+#define exit nt_exit
+#pragma warning(error : 4133)
+#pragma warning(error : 4022)
+#pragma warning(error : 4047)
+#pragma warning(disable : 4127)
+#pragma warning(disable : 4242)
+#endif
 
 #ifdef __cplusplus
 
@@ -70,12 +134,9 @@ typedef bool boolean;
 
 #else
 
-typedef enum 
-{
-    false	= 0,
-    true	= 1,
-	undef	= 0xFFFFFFFF
-} boolean;
+typedef unsigned char boolean;
+#define true 1
+#define false 0
 
 #endif
 

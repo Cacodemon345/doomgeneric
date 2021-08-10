@@ -23,6 +23,9 @@
 //#include "doomtype.h"
 //#include "i_system.h"
 #include "m_argv.h"
+#ifdef _WIN32
+#include <excpt.h>
+#endif
 
 //
 // D_DoomMain()
@@ -36,23 +39,38 @@ void M_FindResponseFile(void);
 
 void dg_Create();
 
-
+#ifdef _WINNT_NATIVE_MODE
+extern int nt_printf(const char*, ...);
+#define printf nt_printf
+int __cdecl main(int argc, char **argv, char** envp, unsigned long debflag)
+#else
+#define nt_printf printf
 int main(int argc, char **argv)
+#endif
 {
+    int ncode;
     // save arguments
+#ifdef _WIN32
+    __try
+#endif
+    {
+        myargc = argc;
+        myargv = argv;
 
-    myargc = argc;
-    myargv = argv;
+        M_FindResponseFile();
 
-    M_FindResponseFile();
+        // start doom
+        printf("Starting D_DoomMain\r\n");
 
-    // start doom
-    printf("Starting D_DoomMain\r\n");
-    
-	dg_Create();
+        dg_Create();
 
-	D_DoomMain ();
-
+        D_DoomMain();
+    }
+#ifdef _WIN32
+    __except(ncode = GetExceptionCode(), EXCEPTION_EXECUTE_HANDLER)
+    {
+        nt_printf("Exception thrown. Exiting. Code: 0x%X\n", ncode);
+    }
+#endif
     return 0;
 }
-

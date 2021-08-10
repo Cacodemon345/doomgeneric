@@ -166,7 +166,7 @@ static void InitConnectData(net_connect_data_t *connect_data)
     //
     // Run as the left screen in three screen mode.
     //
-
+    printf("%s enter\n", __func__);
     if (M_CheckParm("-left") > 0)
     {
         viewangleoffset = ANG90;
@@ -216,6 +216,7 @@ void D_ConnectNetGame(void)
 {
     net_connect_data_t connect_data;
 
+    printf("%s enter\n", __func__);
     InitConnectData(&connect_data);
     netgame = D_InitNetGame(&connect_data);
 

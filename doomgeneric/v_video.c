@@ -146,6 +146,7 @@ void V_DrawPatch(int x, int y, patch_t *patch)
     byte *source;
     int w;
 
+    if (!patch) return;
     y -= SHORT(patch->topoffset);
     x -= SHORT(patch->leftoffset);
 

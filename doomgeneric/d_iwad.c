@@ -24,6 +24,7 @@
 #include "config.h"
 #include "deh_str.h"
 #include "doomkeys.h"
+#include "doomtype.h"
 #include "d_iwad.h"
 #include "i_system.h"
 #include "m_argv.h"
@@ -198,7 +199,7 @@ static char *GetRegistryString(registry_value_t *reg_val)
 
     // Open the key (directory where the value is stored)
 
-    if (RegOpenKeyEx(reg_val->root, reg_val->path,
+    if (RegOpenKeyExA(reg_val->root, reg_val->path,
                      0, KEY_READ, &key) != ERROR_SUCCESS)
     {
         return NULL;
@@ -208,7 +209,7 @@ static char *GetRegistryString(registry_value_t *reg_val)
 
     // Find the type and length of the string, and only accept strings.
 
-    if (RegQueryValueEx(key, reg_val->value,
+    if (RegQueryValueExA(key, reg_val->value,
                         NULL, &valtype, NULL, &len) == ERROR_SUCCESS
      && valtype == REG_SZ)
     {
@@ -216,7 +217,7 @@ static char *GetRegistryString(registry_value_t *reg_val)
 
         result = malloc(len);
 
-        if (RegQueryValueEx(key, reg_val->value, NULL, &valtype,
+        if (RegQueryValueExA(key, reg_val->value, NULL, &valtype,
                             (unsigned char *) result, &len) != ERROR_SUCCESS)
         {
             free(result);

@@ -1,41 +1,61 @@
-# doomgeneric
-The purpose of doomgeneric is to make porting Doom easier.
-Of course Doom is already portable but with doomgeneric it is possible with just a few functions.
-The limitation is there is no sound!
+# DoomGeneric NTNative
+This is a fork of ozkl's DoomGeneric which adds port to the BootExecute environment of Windows XP and later.
 
-To try it you will need a WAD file (game data). If you don't own the game, shareware version is freely available (doom1.wad).
+# Requirements for building DoomGeneric NTNative
+1. Visual Studio 2017 Windows XP toolset.
+2. InbvShim (https://github.com/Cacodemon345/inbvbootdrv).
+3. Windows 7 DDK (for building InbvShim and ntdll.lib).
 
-# porting
-Create a file named doomgeneric_yourplatform.c and just implement these functions to suit your platform.
-* DG_Init
-* DG_DrawFrame
-* DG_SleepMs
-* DG_GetTicksMs
-* DG_GetKey
+# Building
+Note: Only 32-bit Debug builds are supported, anything else is broken.
+Copy over the ntdll.lib file from \path\to\WinDDK\7600.16385.1\lib\wxp\i386\ to the doomgeneric directory inside the project. Open the solution, right click "doomgeneric_nt" and select "Build".
 
-|Functions            |Description|
-|---------------------|-----------|
-|DG_Init              |Initialize your platfrom (create window, framebuffer, etc...).
-|DG_DrawFrame         |Frame is ready in DG_ScreenBuffer. Copy it to your platform's screen.
-|DG_SleepMs           |Sleep in milliseconds.
-|DG_GetTicksMs        |The ticks passed since launch in milliseconds.
-|DG_GetKey            |Provide keyboard events.
-|DG_SetWindowTitle    |Not required. This is for setting the window title as Doom sets this from WAD file.
+# Building InbvShim
+From the x86/x64 Free Build Environment, cd to the directory where you have cloned InbvShim repository, and type 'build' to build the driver. You will find the inbvbootdrv.sys file in the objfre_wxp_x86 (objfre_win7_x64 if building for x64) folder.
 
-# platforms
-I have ported to Windows, X11, and Soso. Just look at (doomgeneric_win.c or doomgeneric_xlib.c).
+# Installing InbvShim
+Copy it to your system32\Drivers directory of your Windows installation. And then grab the inbvbootdrvinst.reg from one of the releases and double-click it to install.
 
-Note that X11 port is not efficient since it generates pixmap by XDrawPoint. It can be further improved by using X11 extensions.
+# Installing DoomGeneric NTNative
+Copy doomgeneric_nt.exe to C:\Windows\system32\ directory.
+There are two ways of launching it:
+1. Registry modification:
+**WARNING:** Backing up the registry is very important before going down this path.
+Open Registry Editor (regedit), go to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\. Double-click BootExecute.
 
-## SDL
+Replace this:
+```
+autocheck autochk *
+```
 
-![SDL](screenshots/sdl.png)
+with:
+```
+autocheck autochk *
+doomgeneric_nt -iwad \??\C:\Windows\doom2.wad -cdrom
+```
 
-## Windows
-![Windows](screenshots/windows.png)
+Replace \??\C:\Windows\doom2.wad with the location where the IWAD is installed (remember to prefix it with \??\ before the full path).
 
-## X11 - Ubuntu
-![Ubuntu](screenshots/ubuntu.png)
+Note that I don't recommend this way because it can make input non-functional, making it impossible to quit the program and requiring a hard reset.
 
-## X11 - FreeBSD
-![FreeBSD](screenshots/freebsd.png)
+2. Native Shell (assuming you installed it beforehand):
+cd to the directory where DoomGeneric NTNative is installed and type:
+```
+doomgeneric_nt.exe -iwad \??\path\to\iwad.wad -cdrom
+```
+
+Replace \path\to\ with the location where the IWAD is installed.
+
+# Extra bonuses:
+1. 16-color mode for Windows GDI port activated with -4bit option.
+
+# Bugs:
+1. Savegames are broken.
+2. Picking a weapon crashes the program (bug inherited from original DoomGeneric).
+
+# License:
+Same as original DoomGeneric, except for some files:
+
+i_main_nt.c: ReactOS project license.
+doomgeneric_nt.c: Uses code both from ZenWINX and Native Shell (LGPL).
+Bundled NDK: Used under the terms of GPLv2.

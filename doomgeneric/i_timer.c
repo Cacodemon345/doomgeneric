@@ -15,13 +15,13 @@
 // DESCRIPTION:
 //      Timer functions.
 //
-
-#include "i_timer.h"
-#include "doomtype.h"
+#include <stdarg.h>
 
 #include "doomgeneric.h"
+#include "doomtype.h"
 
-#include <stdarg.h>
+
+#include "i_timer.h"
 //#include <sys/time.h>
 //#include <unistd.h>
 

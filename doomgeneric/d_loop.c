@@ -18,6 +18,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "doomfeatures.h"
 
@@ -456,7 +457,7 @@ boolean D_InitNetGame(net_connect_data_t *connect_data)
     net_addr_t *addr = NULL;
     int i;
 #endif
-
+    printf("%s enter\n", __func__);
     // Call D_QuitNetGame on exit:
 
     I_AtExit(D_QuitNetGame, true);

@@ -1309,8 +1309,11 @@ void D_DoomMain (void)
     if (M_ParmExists("-cdrom"))
     {
         printf(D_CDROM);
-
+#ifdef _WINNT_NATIVE_MODE
+        M_SetConfigDir("\\??\\c:\\doomdata\\");
+#else
         M_SetConfigDir("c:\\doomdata\\");
+#endif
     }
     else
 #endif
@@ -1618,6 +1621,7 @@ void D_DoomMain (void)
 #endif
 
     // Initial netgame startup. Connect to server etc.
+    printf ("D_ConnectNetGame: Init game subsystem.\n");
     D_ConnectNetGame();
 
     // get skill / episode / map from parms

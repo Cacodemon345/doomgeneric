@@ -20,7 +20,7 @@
 
 
 #include <math.h>
-
+#include "doomdef.h"
 #include "z_zone.h"
 
 #include "deh_main.h"
@@ -33,7 +33,7 @@
 #include "i_system.h"
 #include "w_wad.h"
 
-#include "doomdef.h"
+
 #include "p_local.h"
 
 #include "s_sound.h"

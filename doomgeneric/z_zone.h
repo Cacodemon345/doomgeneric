@@ -25,6 +25,7 @@
 #define __Z_ZONE__
 
 #include <stdio.h>
+#include "doomtype.h"
 
 //
 // ZONE MEMORY

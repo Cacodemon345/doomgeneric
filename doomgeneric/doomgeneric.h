@@ -2,7 +2,7 @@
 #define DOOM_GENERIC
 
 #include <stdlib.h>
-#include <stdint.h>
+#include "doomtype.h"
 
 #define DOOMGENERIC_RESX 640
 #define DOOMGENERIC_RESY 400

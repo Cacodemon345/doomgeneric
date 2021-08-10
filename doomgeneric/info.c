@@ -48,7 +48,7 @@ char *sprnames[] = {
 
 
 // Doesn't work with g++, needs actionf_p1
-void  A_Light0();
+void A_Light0();
 void A_WeaponReady();
 void A_Lower();
 void A_Raise();

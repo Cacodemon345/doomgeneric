@@ -332,7 +332,7 @@ int W_LumpLength (unsigned int lump)
     return lumpinfo[lump].size;
 }
 
-
+extern void I_EndRead();
 
 //
 // W_ReadLump

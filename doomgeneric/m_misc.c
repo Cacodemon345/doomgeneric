@@ -373,7 +373,6 @@ char *M_StringReplace(const char *haystack, const char *needle,
 boolean M_StringCopy(char *dest, const char *src, size_t dest_size)
 {
     size_t len;
-
     if (dest_size >= 1)
     {
         dest[dest_size - 1] = '\0';
@@ -514,23 +513,4 @@ int M_snprintf(char *buf, size_t buf_len, const char *s, ...)
     va_end(args);
     return result;
 }
-
-#ifdef _WIN32
-
-char *M_OEMToUTF8(const char *oem)
-{
-    unsigned int len = strlen(oem) + 1;
-    wchar_t *tmp;
-    char *result;
-
-    tmp = malloc(len * sizeof(wchar_t));
-    MultiByteToWideChar(CP_OEMCP, 0, oem, len, tmp, len);
-    result = malloc(len * 4);
-    WideCharToMultiByte(CP_UTF8, 0, tmp, len, result, len * 4, NULL, NULL);
-    free(tmp);
-
-    return result;
-}
-
-#endif
 

@@ -1725,6 +1725,41 @@ static int ParseIntParameter(char *strparm)
     return parm;
 }
 
+// Taken from K&R Page 71.
+double old_atof(char* str)
+{
+    int sign;
+    double number = 0.0, power = 1.0;
+
+    while (isspace(*str))
+        ++str;
+
+    sign = (*str == '-') ? -1 : 1; // Save the sign
+
+    if (*str == '-' || *str == '+') // Skip the sign
+        str++;
+
+    while (isdigit(*str)) // Digits before the decimal point
+    {
+        number = 10.0 * number + (*str - '0');
+        str++;
+    }
+
+    if (*str == '.') // Skip the decimal point
+        str++;
+
+    while (isdigit(*str)) // Digits after the decimal point
+    {
+        number = 10.0 * number + (*str - '0');
+        power *= 10.0;
+        str++;
+    }
+
+
+    return sign * number / power;
+
+}
+
 static void SetVariable(default_t *def, char *value)
 {
     int intparm;
@@ -1763,7 +1798,7 @@ static void SetVariable(default_t *def, char *value)
             break;
 
         case DEFAULT_FLOAT:
-            * (float *) def->location = (float) atof(value);
+            * (float *) def->location = (float)old_atof(value);
             break;
     }
 }

@@ -25,6 +25,15 @@
 static const char
 rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 
+#include <stdlib.h>
+#include <stdio.h>
+
+#include <fcntl.h>
+
+#include <stdarg.h>
+
+#include <sys/types.h>
+
 #include "config.h"
 #include "v_video.h"
 #include "m_argv.h"
@@ -37,15 +46,6 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include "doomkeys.h"
 
 #include "doomgeneric.h"
-
-#include <stdbool.h>
-#include <stdlib.h>
-
-#include <fcntl.h>
-
-#include <stdarg.h>
-
-#include <sys/types.h>
 
 //#define CMAP256
 
@@ -174,6 +174,7 @@ void cmap_to_fb(uint8_t * out, uint8_t * in, int in_pixels)
     }
 }
 
+extern int I_InitInput(void);
 void I_InitGraphics (void)
 {
     int i;
@@ -223,7 +224,6 @@ void I_InitGraphics (void)
 
 	screenvisible = true;
 
-    extern int I_InitInput(void);
     I_InitInput();
 }
 
@@ -336,6 +336,11 @@ void I_SetPalette (byte* palette)
         colors[i].g = gammatable[usegamma][*palette++];
         colors[i].b = gammatable[usegamma][*palette++];
     }
+}
+
+struct color* I_GetPalPtr()
+{
+    return colors;
 }
 
 // Given an RGB value, find the closest matching palette index.

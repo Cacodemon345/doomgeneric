@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/doomgeneric/v16
+/Debug
+/doomgeneric/Debug
+/doomgeneric/buildfre_wxp_x86.err
+/doomgeneric/buildfre_wxp_x86.log
+/doomgeneric/buildfre_wxp_x86.wrn
+/doomgeneric/ntdll.lib
+/doomgeneric/SOURCES
+/doomgeneric/SOURCES.txt
+/doomgeneric/x64/Debug
+/doomgeneric/nmakefile
+/doomgeneric/doomgeneric_nt

@@ -16,12 +16,12 @@
 //     Common code to parse command line, identifying WAD files to load.
 //
 
+#include "w_wad.h"
 #include "doomfeatures.h"
 #include "d_iwad.h"
 #include "m_argv.h"
 #include "w_main.h"
 #include "w_merge.h"
-#include "w_wad.h"
 #include "z_zone.h"
 
 // Parse the command line, merging WAD files that are sppecified.

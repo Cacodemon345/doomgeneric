@@ -355,6 +355,7 @@ static int ZenityErrorBox(char *message)
 //
 
 static boolean already_quitting = false;
+extern void nt_exit(int exit);
 
 void I_Error (char *error, ...)
 {
@@ -374,7 +375,7 @@ void I_Error (char *error, ...)
     {
         already_quitting = true;
     }
-
+#ifndef _WINNT_NATIVE_MODE
     // Message first.
     va_start(argptr, error);
     //fprintf(stderr, "\nError: ");
@@ -382,12 +383,16 @@ void I_Error (char *error, ...)
     fprintf(stderr, "\n\n");
     va_end(argptr);
     fflush(stderr);
+#endif
 
     // Write a copy of the message into buffer.
     va_start(argptr, error);
     memset(msgbuf, 0, sizeof(msgbuf));
     M_vsnprintf(msgbuf, sizeof(msgbuf), error, argptr);
     va_end(argptr);
+#ifdef _WINNT_NATIVE_MODE
+    printf("%s", msgbuf);
+#endif
 
     // Shutdown. Here might be other errors.
 
@@ -402,7 +407,7 @@ void I_Error (char *error, ...)
 
         entry = entry->next;
     }
-
+#ifndef _WINNT_NATIVE_MODE
     exit_gui_popup = !M_ParmExists("-nogui");
 
     // Pop up a GUI dialog box to show the error message, if the
@@ -463,6 +468,9 @@ void I_Error (char *error, ...)
     while (true)
     {
     }
+#endif
+#else
+    nt_exit(-1);
 #endif
 }
 
