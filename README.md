@@ -55,6 +55,7 @@ Replace \path\to\ with the location where the IWAD is installed.
 # Bugs:
 1. Savegames are broken.
 2. Picking a weapon crashes the program (bug inherited from original DoomGeneric).
+3. It's slow as hell, probably could use FastDoom's EGA drawing code for it.
 
 # License:
 Same as original DoomGeneric, except for some files:
