@@ -11,7 +11,7 @@ Only tested on Windows XP 32-bit. I don't know about later versions.
 
 # Building
 Note: Only 32-bit Debug builds are supported, anything else is broken.
-Copy over the ntdll.lib file from \path\to\WinDDK\7600.16385.1\lib\wxp\i386\ to the doomgeneric directory inside the project. Open the solution, right click "doomgeneric_nt" and select "Build".
+Copy over the ntdll.lib file from \\path\to\WinDDK\7600.16385.1\lib\wxp\i386\ to the doomgeneric directory inside the project. Open the solution, right click "doomgeneric_nt" and select "Build".
 
 # Building InbvShim
 From the x86/x64 Free Build Environment, cd to the directory where you have cloned InbvShim repository, and type 'build' to build the driver. You will find the inbvbootdrv.sys file in the objfre_wxp_x86 (objfre_win7_x64 if building for x64) folder.
@@ -23,7 +23,9 @@ Copy it to your system32\Drivers directory of your Windows installation. And the
 Copy doomgeneric_nt.exe to C:\Windows\system32\ directory.
 There are two ways of launching it:
 1. Registry modification:
+
 **WARNING:** Backing up the registry is very important before going down this path.
+
 Open Registry Editor (regedit), go to HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\. Double-click BootExecute.
 
 Replace this:
@@ -37,17 +39,18 @@ autocheck autochk *
 doomgeneric_nt -iwad \??\C:\Windows\doom2.wad -cdrom
 ```
 
-Replace \??\C:\Windows\doom2.wad with the location where the IWAD is installed (remember to prefix it with \??\ before the full path).
+Replace \\??\C:\Windows\doom2.wad with the location where the IWAD is installed (remember to prefix it with \\??\ before the full path).
 
 Note that I don't recommend this way because it can make input non-functional, making it impossible to quit the program and requiring a hard reset.
 
 2. Native Shell (assuming you installed it beforehand):
+
 cd to the directory where DoomGeneric NTNative is installed and type:
 ```
 doomgeneric_nt.exe -iwad \??\path\to\iwad.wad -cdrom
 ```
 
-Replace \path\to\ with the location where the IWAD is installed.
+Replace \\path\to\ with the location where the IWAD is installed.
 
 # Extra bonuses:
 1. 16-color mode for Windows GDI port activated with -4bit option.
